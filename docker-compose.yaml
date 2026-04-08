@@ -1,0 +1,19 @@
+version: '3.6'
+services:
+    demo_app:
+        tty: true
+        container_name: demo_app
+        build:
+            context: ./
+            dockerfile: ./Dockerfile
+        ports:
+            - "8080:8080"
+            - "8081:8081"
+            - "8502:8502"
+        expose:
+            - "8080"
+            - "8081"
+            - "8502"
+        working_dir: /home/app
+        volumes:
+            - ./:/home/app
