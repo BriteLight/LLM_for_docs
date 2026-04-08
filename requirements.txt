@@ -52,6 +52,6 @@ pandas-gbq==0.27.0
 sentence-transformers==3.2.1
 hf_xet
 
-##https://repository.walmart.com/content/repositories/pangaea_releases/com/walmart/nextech/radial/radial_py_fastapi_golden_signals/0.0.4-py3-none-any/radial_py_fastapi_golden_signals-0.0.4-py3-none-any.whl
+##https://repository.<priv-dom>/content/repositories/pangaea_releases/com/walmart/nextech/radial/radial_py_fastapi_golden_signals/0.0.4-py3-none-any/radial_py_fastapi_golden_signals-0.0.4-py3-none-any.whl
 
-https://repository.walmart.com/content/repositories/pangaea_releases/com/walmart/nextech/radial/wm_py_prom_golden_signals/0.0.1-py3-none-any/wm_py_prom_golden_signals-0.0.1-py3-none-any.whl
+https://repository.<priv-dom>/content/repositories/pangaea_releases/com/walmart/nextech/radial/wm_py_prom_golden_signals/0.0.1-py3-none-any/wm_py_prom_golden_signals-0.0.1-py3-none-any.whl
