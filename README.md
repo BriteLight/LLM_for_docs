@@ -22,7 +22,7 @@ See branches for additional demos which may not have been integrated into the pr
 
 ##### Route A - Azure Sandbox
 
-In order to use this repo, you need access to a GenAI model. The easiest way to do that is via a direct, Azure Cognitive Services model. Although it is planned to decommission, you may have the ability to request access to a Sandbox environment such as EBS's GenAI Sandbox: https://confluence.<priv-dom>/display/GA/Onboarding+to+Generative+AI+Sandboxes
+In order to use this repo, you need access to a GenAI model. The easiest way to do that is via a direct, Azure Cognitive Services model. Although it is planned to decommission, you may have the ability to request access to a Sandbox environment such as EBS's GenAI Sandbox: ~/display/GA/Onboarding+to+Generative+AI+Sandboxes
 
 Set `app/envs/nosecrets.env` environment variables to look as follows (without changing unlisted variables):
 
@@ -43,7 +43,7 @@ AZURE_OPENAI_KEY=<YOUR_API_KEY>
 
 ##### Route B - Element LLM Gateway
 
-If you are targeting a production deployment, you should not use the above method. You should start by using the Element LLM Gateway. You must use ServiceMesh (currently; key-based access is planned) to do this access. This means generating your service mesh headers. To request access to the Element LLM Gateway, use this: https://dx.<priv-dom>/documents/product/Element%20GenAI%20Platform/Onboarding-to-LLM-Gateway-1648545176
+If you are targeting a production deployment, you should not use the above method. You should start by using the Element LLM Gateway. You must use ServiceMesh (currently; key-based access is planned) to do this access. This means generating your service mesh headers. To request access to the Element LLM Gateway, use this: /documents/product/Element%20GenAI%20Platform/Onboarding-to-LLM-Gateway-1648545176
 
 Set `app/envs/nosecrets.env` environment variables to look as follows (without changing unlisted variables):
 
@@ -106,7 +106,7 @@ If you use the root location, it will be loaded from there automatically into th
 
 #### AKeyless Access (LeveragedAI Group Only)
 
-To access the radial llm secrets, you need to submit a service now request for access to the AD group `radial-devs`. You can do that here (and follow the below inputs): https://<priv-dom>.service-now.com/wm_sp/?id=sc_cat_item_guide&sys_id=b3234c3b4fab8700e4cd49cf0310c7d7
+To access the radial llm secrets, you need to submit a service now request for access to the AD group `radial-devs`. You can do that here (and follow the below inputs): https://service-now.com/dm_sp/?id=sc_cat_item_guide&sys_id=b3234c3b4fab8700e4cd49cf0310c7d7
 
 ![Service Now AD Request for Group](https://gecgithub01.<priv-dom>/nextech/leveragedAI-genai-starter-kit/blob/cold-start-dev-improvements/app/assets/ad-req-0.png?raw=true)
 
@@ -207,7 +207,7 @@ kubectl delete pod $(kubectl get pods -n radial | grep leveragedai-genai-starter
 
 ### How to Contribute
 
-1. Request membership to https://gecgithub01.<priv-dom>/orgs/nextech/teams/leveragedai-starter-kit-contributors/ . 
+1. Request membership to https://gecgithub01.priv.com/orgs/nextech/teams/leveragedai-starter-kit-contributors/ . 
 2. Make a branch for your addition(s)
 3. Either pitch an idea to the maintainers (you can use email, teams, or Issues+tagging as you prefer) or select an item from the TODO below
 4. Make a PR with your merged changes when you're ready

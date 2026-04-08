@@ -1,0 +1,123 @@
+owner:
+  group: gcp-ink-ds-genai
+
+notify:
+  slack:
+    channelName: ink-genai-ops
+
+setup:
+  releaseRefs: [ "main" ]
+  featureFlagMap:   
+    errorIfLabMixedWithOtherClusterTypes: false # Solution from https://stackoverflow.dx.<priv-dom>/questions/3590
+
+alerts:
+  slackChannel:
+    - ink-genai-ops
+
+profiles:
+  - default-lab  #deploys to our default lab cluster
+
+build:
+  artifact: inkiru-genai-apps
+  buildType: docker
+  docker:
+    app:
+      dockerFile: ./Dockerfile
+      runtime: python
+
+deploy:
+  namespace: inkiru-genai
+
+  releaseType:
+    rollbackOnError: true
+    waitForReady: true
+    deployTimeout: 2000
+
+  helm:
+    values:
+
+      metadata:
+        labels:
+          dm.app: inkiru-genai
+          dm.env: dev
+        annotations:
+          sidecar.istio.io/inject: "true"
+          traffic.sidecar.istio.io/excludeOutboundPorts: 8080, 8300
+          strati.signatureSecrets: /etc/secrets/
+
+      secrets:
+        akeyless: true
+        config:
+          akeyless:
+            path: /Prod/WCNP/homeoffice/gcp-ink-ds-genai
+        files:
+          - destination: /app/envs/api_key.env
+            content: API_KEY 
+          - destination: /app/envs/milvus_user.env
+            content: MILVUS_USER          
+          - destination: /app/envs/milvus_pw.env
+            content: MILVUS_PASSWORD
+          - destination: /app/envs/bq_json.json
+            content: BQUERY_JSON
+#          - destination: /dmt-nxt-radial-dev-69faeaa9733b.json
+#            content: svc-etl-gcp-json-credentials
+#          - destination: /dmt-nxt-radial-dev-69faeaa9733b.json
+#            content: svc-etl-gcp-json-credentials
+#          - destination: /leveragedAI-GenAI-Starter-Kit-Secrets.env
+#            content: leveragedAI-genAI-starter-kit-azure-key
+#          - destination: /signature.properties
+#            content: SM_SIGNATURE_PROPERTIES
+#            base64decode: true
+
+      scaling:
+        enabled: "false"
+        min: 1
+        max: 1
+
+      min:
+        cpu: 2
+        memory: 2048Mi
+      max:
+        cpu: 2
+        memory: 4096Mi
+
+  stages:
+    - name: test
+      target:
+        cluster_id: [scus-lab-a1]
+      refs: [branch]
+      rollbackOnError: false
+      preDeploy:
+        - task:
+            name: messageSlack
+            text: "Starting deployment to test branch with {{$.kittExec.currentCluster.profile}} cluster: {{$.kittExec.currentCluster.clusterId}} && namespace: {{$.kitt.deploy.namespace}}"
+      postDeploy:
+        - task:
+            name: messageSlack
+            text: "Application is deployed to test branch with {{$.kittExec.currentCluster.profile}} cluster! Endpoint - http://{{$.kitt.build.artifact}}.{{$.kitt.deploy.namespace}}.{{$.kittExec.currentCluster.clusterId}}.cluster.k8s.us.<priv-dom>"
+        - task:
+            name: messageSlack
+            text: "Starting post deploy UI test for {{$.kittExec.currentCluster.profile}}"
+        - task:
+            name: messageSlack
+            text: "Post Deploy UI tests are completed from test branch post deploy!"
+    - name: dev
+      target:
+        cluster_id: [uswest-dev-gke-001]
+      refs: [main]
+      rollbackOnError: false
+      preDeploy:
+        - task:
+            name: messageSlack
+            text: "Starting deployment to dev with {{$.kittExec.currentCluster.profile}} cluster: {{$.kittExec.currentCluster.clusterId}} && namespace: {{$.kitt.deploy.namespace}}"
+      postDeploy:
+        - task:
+            name: messageSlack
+            text: "Application is deployed to dev with {{$.kittExec.currentCluster.profile}} cluster! Endpoint - http://{{$.kitt.build.artifact}}.{{$.kitt.deploy.namespace}}.dev.k8s.<priv-dom>"
+        - task:
+            name: messageSlack
+            text: "Starting post deploy UI test for {{$.kittExec.currentCluster.profile}}"
+        - task:
+            name: messageSlack
+            text: "Post Deploy UI tests are completed from dev post deploy!"
+

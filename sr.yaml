@@ -1,0 +1,53 @@
+schemaVersion: 1.0.0
+applications:
+- key: GENAI-APPS
+  name: genai-applications
+  description: Application and api endpoints for generative AI apps
+  organization: DSORG
+  teamRostersProductId: 27
+  communication:
+    slack:
+      - channel: genai-ops
+  companyCatalog: true
+  businessCriticality: MINOR
+  members:
+  - homeoffice\bl
+  - homeoffice\britelight
+  - homeoffice\brad
+  - homeoffice\bleonard
+  - homeoffice\bradleonard
+  environments:
+  - name: dev
+    description: genai dev
+    type: DEVELOPMENT
+    externalCatalog: false
+    consumerIdInfos:
+    - consumerId: <priv-cust-serv-proj-id>
+      publicKey: <pub-key>
+    serviceType: REST
+    serviceMeshConfig:
+      deploymentType: WCNP
+      defaultIngressConfig:
+        requestTimeout: 0
+      ingressListeners:
+      - protocol: HTTP
+        applicationHost: 127.0.0.1
+        applicationPort: 8080
+        enablePolicyEngine: false
+  - name: stage
+    description: genai stage
+    type: STAGING
+    externalCatalog: false
+    consumerIdInfos:
+    - consumerId: <priv-cust-serv-proj-id>
+      publicKey: <pub-key>
+    serviceType: REST
+    serviceMeshConfig:
+      deploymentType: WCNP
+      defaultIngressConfig:
+        requestTimeout: 0
+      ingressListeners:
+      - protocol: HTTP
+        applicationHost: 127.0.0.1
+        applicationPort: 8080
+        enablePolicyEngine: false
